@@ -22,10 +22,13 @@ ENV_FILE="$(dirname "$0")/../../.env"
 [ -f "$ENV_FILE" ] && export $(grep -v '^#' "$ENV_FILE" | xargs)
 
 # ========================== ĐƯỜNG DẪN ==========================
-# >>> CHỈNH CÁC DÒNG NÀY CHO ĐÚNG VỚI SERVER CỦA BẠN <<<
-AGENT0_DIR="$HOME/Agent0/Agent0"              # Thư mục source code Agent0
-DATA_DIR="$HOME/aime2025"                     # Thư mục data
-STORAGE_PATH="$HOME/agent0_storage"           # Nơi lưu checkpoints, logs
+# Tự detect đường dẫn dựa trên vị trí script
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+AGENT0_DIR="${AGENT0_DIR:-$PROJECT_DIR/Source_code/Agent0/Agent0}"
+DATA_DIR="${DATA_DIR:-$SCRIPT_DIR}"
+STORAGE_PATH="${STORAGE_PATH:-$PROJECT_DIR/agent0_storage}"
 # ===============================================================
 
 # ========================== CONFIG CHO 2x T4 ==========================
@@ -102,25 +105,41 @@ setup() {
     echo "  [Setup] Installing Agent0 dependencies"
     echo "============================================"
 
-    # Tạo conda environment
-    if ! conda env list | grep -q "agent0"; then
-        echo "Creating conda env 'agent0'..."
-        conda create -n agent0 python=3.12 -y
+    # Check AGENT0_DIR exists
+    if [ ! -d "$AGENT0_DIR" ]; then
+        echo "ERROR: AGENT0_DIR not found: $AGENT0_DIR"
+        echo "Please edit this script and set the correct path."
+        exit 1
     fi
 
-    # Activate
-    eval "$(conda shell.bash hook)"
-    conda activate agent0
+    # Conda (optional)
+    if command -v conda &>/dev/null; then
+        if ! conda env list | grep -q "agent0"; then
+            echo "Creating conda env 'agent0'..."
+            conda create -n agent0 python=3.12 -y
+        fi
+        eval "$(conda shell.bash hook)"
+        conda activate agent0
+    fi
+
+    # Install base dependencies first
+    pip install datasets pandas openai huggingface_hub stopit mathruler 2>&1 | tail -5
 
     cd "$AGENT0_DIR"
 
     # Install requirements
     echo "Installing requirements..."
-    pip install -r requirements.txt 2>&1 | tail -5
+    if [ -f requirements.txt ]; then
+        pip install -r requirements.txt 2>&1 | tail -5
+    else
+        pip install torch transformers accelerate vllm ray wandb 2>&1 | tail -5
+    fi
 
     # Install VeRL
-    cd executor_train
-    pip install -e verl 2>&1 | tail -3
+    if [ -d executor_train/verl ]; then
+        cd executor_train
+        pip install -e verl 2>&1 | tail -3
+    fi
 
     # Install flash-attn (optional, may fail on T4 - that's OK)
     echo "Installing flash-attn (optional)..."

@@ -35,9 +35,13 @@ ENV_FILE="$(dirname "$0")/../../.env"
 
 # ========================== ĐƯỜNG DẪN ==========================
 # >>> CHỈNH CHO ĐÚNG SERVER <<<
-AGENT0_DIR="$HOME/Agent0/Agent0"
-DATA_DIR="$HOME/aime2025"
-STORAGE_PATH="$HOME/agent0_storage"
+# Tự detect đường dẫn dựa trên vị trí script
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+AGENT0_DIR="${AGENT0_DIR:-$PROJECT_DIR/Source_code/Agent0/Agent0}"
+DATA_DIR="${DATA_DIR:-$SCRIPT_DIR}"
+STORAGE_PATH="${STORAGE_PATH:-$PROJECT_DIR/agent0_storage}"
 export STORAGE_PATH
 # ===============================================================
 
@@ -73,25 +77,45 @@ log() {
 setup() {
     log "Installing Agent0 dependencies"
 
-    if ! conda env list | grep -q "agent0"; then
-        conda create -n agent0 python=3.12 -y
+    # Check AGENT0_DIR exists
+    if [ ! -d "$AGENT0_DIR" ]; then
+        echo "ERROR: AGENT0_DIR not found: $AGENT0_DIR"
+        echo "Please edit this script and set the correct path."
+        echo "Run: find /home -name 'requirements.txt' -path '*/Agent0/*' 2>/dev/null"
+        exit 1
     fi
-    eval "$(conda shell.bash hook)"
-    conda activate agent0
 
-    # Install curriculum_train deps
-    cd "$AGENT0_DIR"
-    pip install -r requirements.txt 2>&1 | tail -5
+    # Conda (optional - skip if not available)
+    if command -v conda &>/dev/null; then
+        if ! conda env list | grep -q "agent0"; then
+            conda create -n agent0 python=3.12 -y
+        fi
+        eval "$(conda shell.bash hook)"
+        conda activate agent0
+    fi
 
-    # Install executor_train deps
-    cd "$AGENT0_DIR/executor_train"
-    pip install -e verl 2>&1 | tail -3
+    # Install base dependencies first
+    pip install datasets pandas openai huggingface_hub stopit mathruler 2>&1 | tail -5
 
-    # Flash attention (optional)
+    # Install curriculum_train deps (if requirements.txt exists)
+    if [ -f "$AGENT0_DIR/requirements.txt" ]; then
+        cd "$AGENT0_DIR"
+        pip install -r requirements.txt 2>&1 | tail -5
+    else
+        echo "WARNING: $AGENT0_DIR/requirements.txt not found, installing core deps..."
+        pip install torch transformers accelerate vllm ray datasets wandb 2>&1 | tail -5
+    fi
+
+    # Install executor_train deps (if verl exists)
+    if [ -d "$AGENT0_DIR/executor_train/verl" ]; then
+        cd "$AGENT0_DIR/executor_train"
+        pip install -e verl 2>&1 | tail -3
+    else
+        echo "WARNING: verl not found at $AGENT0_DIR/executor_train/verl"
+    fi
+
+    # Flash attention (optional, may fail on T4)
     pip install "flash-attn==2.8.3" --no-build-isolation --no-cache-dir 2>&1 | tail -3 || true
-
-    # Extra deps for curriculum
-    pip install stopit mathruler 2>&1 | tail -3
 
     # Create directories
     mkdir -p "$STORAGE_PATH"/{models,evaluation,generated_question,temp_results}
