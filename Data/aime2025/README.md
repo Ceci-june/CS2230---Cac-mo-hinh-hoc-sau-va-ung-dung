@@ -222,6 +222,85 @@ bash run_agent0_full.sh setup
 bash run_agent0_full.sh iter 1
 ```
 
+#### Giải thích chi tiết theo luồng code (`run_agent0_full.sh`)
+
+Phần này là bản “đọc code theo thứ tự chạy”, để bạn map trực tiếp từ file script sang hành vi thực tế.
+
+1) **Khởi tạo shell + env**
+- `set -x`: bật debug, in ra mọi lệnh khi chạy.
+- Nạp `.env` nếu có để lấy biến như `AGENT0_DIR`, `DATA_DIR`, `STORAGE_PATH`, API key...
+
+2) **Thiết lập đường dẫn và config global**
+- `SCRIPT_DIR`, `PROJECT_DIR`: tự suy ra path theo vị trí script.
+- `AGENT0_DIR`, `DATA_DIR`, `STORAGE_PATH`: có thể override qua biến môi trường.
+- Config chính:
+   - `BASE_MODEL="Qwen/Qwen3-4B-Base"`
+   - `NUM_ITERATIONS=3`
+   - `N_GPUS=2`
+   - ngưỡng lọc dữ liệu: `MIN_SCORE=0.3`, `MAX_SCORE=0.8`
+
+3) **Hàm `setup()`**
+- Kiểm tra `AGENT0_DIR` tồn tại.
+- Tạo/activate conda env `agent0` (nếu có conda).
+- Cài dependencies (`datasets`, `openai`, `mathruler`, `verl`, ...).
+- Tạo thư mục lưu kết quả trong `agent0_storage/`.
+- Tải AIME2025 và tạo `aime2025_val.parquet` (format `prompt`/`answer`).
+
+4) **Hàm `train_curriculum()`**
+- Start vLLM service trên GPU 1 để phục vụ reward/self-consistency.
+- Train curriculum agent trên GPU 0 qua `verl.trainer.main`.
+- Merge checkpoint curriculum về dạng huggingface để dùng cho bước tiếp theo.
+
+5) **Hàm `generate_questions()`**
+- Chạy song song trên mỗi GPU để sinh câu hỏi mới từ curriculum model.
+- Mỗi GPU xuất một file JSON riêng.
+- Cuối bước sẽ đếm tổng số câu đã sinh.
+
+6) **Hàm `evaluate_questions()`**
+- Dùng executor model để chấm/đánh giá các câu vừa sinh.
+- Chạy song song theo GPU.
+- Có timeout watchdog (1 giờ) để tránh treo vô hạn.
+
+7) **Hàm `filter_data()`**
+- Đọc các file `*_results.json`.
+- Lọc theo `score` nằm trong khoảng `[MIN_SCORE, MAX_SCORE]`.
+- Lưu dữ liệu train cuối cùng vào `generated_question/iterX/train.parquet`.
+
+8) **Hàm `train_executor()` (ADPO)**
+- Start tool server (`verl_tool.servers.serve`) để hỗ trợ code execution.
+- Gọi `verl_tool.trainer.main_ppo` với config đã giảm cho 2xT4:
+   - batch nhỏ hơn,
+   - offload bật,
+   - rollout mode `sync`,
+   - `max_response_length` giới hạn hơn.
+- Log train ghi vào `log_executor_iterX.txt`.
+
+9) **Hàm `eval_aime2025()`**
+- Start tool server + `eval_service/app.py` (OpenAI-compatible endpoint local).
+- Dùng Python client gọi `http://localhost:5000/v1` để solve AIME2025.
+- Parse đáp án trong `\\boxed{}` và tính accuracy.
+- Lưu file `eval_iterX.json` vào `STORAGE_PATH`.
+
+10) **Hàm `run_iteration()`**
+- Orchestrate đủ chuỗi:
+   `train_curriculum -> generate_questions -> evaluate_questions -> filter_data -> train_executor -> eval_aime2025`.
+- Tìm checkpoint executor mới nhất để làm input cho vòng sau.
+
+11) **Hàm `run_all()`**
+- Eval base model trước (`iter 0`).
+- Lặp `NUM_ITERATIONS` lần, mỗi lần chạy `run_iteration()`.
+- Sau cùng in bảng accuracy các iteration từ các file `eval_iter*.json`.
+
+12) **`case ... esac` (entrypoint CLI)**
+- `setup`, `test`, `all`, `iter`, `curriculum`, `generate`, `filter`, `executor`, `eval`.
+- Đây là điểm bắt đầu khi bạn chạy `bash run_agent0_full.sh <command>`.
+
+#### Lưu ý thực tế khi chạy script này
+
+- Script này tối ưu cho **Linux + NVIDIA GPU**, không phải luồng chạy chuẩn cho macOS.
+- Trong file có tham số `--slient True` (có thể là typo của `--silent` tùy version service). Nếu gặp lỗi parse arg, kiểm tra chỗ này trước.
+- Vì `set -x` bật sẵn, log rất dài; khi debug nên redirect ra file để dễ đọc.
+
 ### `run_train.sh`
 
 Mục đích:
