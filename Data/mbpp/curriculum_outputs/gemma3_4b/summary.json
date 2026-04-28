@@ -6,11 +6,11 @@
     "base_url": "https://ollama.com",
     "data_file": "/Users/vy/Desktop/School/CS2230 - Thầy Tiệp Bịp/Do_an/Data/mbpp/mbpp.jsonl",
     "synthetic_only": true,
-    "synthetic_count": 20,
+    "synthetic_count": 30,
     "synthetic_generator": "llm",
-    "synthetic_domain": "dynamic programming, recursion, memoization, graph algorithms",
-    "strategy": "all",
-    "items_per_strategy": 7,
+    "synthetic_domain": "elementary python: absolute value, power, celsius to fahrenheit, area of circle, concatenate strings, uppercase lowercase",
+    "strategy": "easy_medium_hard",
+    "items_per_strategy": 15,
     "limit": null,
     "repair_rounds": 2,
     "verify_timeout": 20,
@@ -18,330 +18,286 @@
     "code_key": "code",
     "test_key": "test_list",
     "setup_key": "test_setup_code",
-    "log_file": "Source_code/Agent0/Agent0_new/logs/kb_dp.log",
+    "log_file": "Source_code/Agent0/Agent0_new/logs/kb_easy_7200.log",
     "log_level": "INFO",
     "log_llm_io": false,
     "llm_io_max_chars": 20000
   },
   "stats": {
-    "selected": 21,
-    "accepted": 20,
-    "rejected": 1,
+    "selected": 30,
+    "accepted": 18,
+    "rejected": 12,
     "skipped_duplicate_fail": 0,
     "skipped_existing_kb": 0,
-    "kb_existing": 67,
-    "kb_total": 87,
+    "kb_existing": 763,
+    "kb_total": 781,
     "taxonomy_top": [
       [
-        "bitwise",
-        12
-      ],
-      [
-        "lists",
-        9
-      ],
-      [
-        "search",
-        8
-      ],
-      [
-        "math",
-        6
-      ],
-      [
         "io",
-        6
+        30
       ],
       [
-        "dict",
-        4
+        "bitwise",
+        24
       ],
       [
         "strings",
-        4
-      ],
-      [
-        "graph",
-        3
-      ],
-      [
-        "recursion",
-        3
-      ],
-      [
-        "dp",
-        3
+        9
       ],
       [
         "loops",
+        7
+      ],
+      [
+        "lists",
+        6
+      ],
+      [
+        "sorting",
+        1
+      ],
+      [
+        "search",
         1
       ]
     ],
     "counts": {
-      "accepted": 20,
-      "stage_hard": 21,
-      "strategy_easy_medium_hard": 7,
-      "verified_pass": 20,
-      "strategy_diversity": 7,
-      "rejected": 1,
-      "verified_fail": 1,
-      "strategy_mutate": 7
+      "rejected": 12,
+      "stage_medium": 15,
+      "strategy_easy_medium_hard": 30,
+      "verified_fail": 12,
+      "accepted": 18,
+      "verified_pass": 18,
+      "stage_hard": 15
     }
   },
   "accepted_examples": [
     {
-      "uid": "easy_medium_hard-synllm_4-1",
-      "source_task_id": "synllm_4",
+      "uid": "easy_medium_hard-synllm_6-2",
+      "source_task_id": "synllm_6",
       "strategy": "easy_medium_hard",
-      "stage": "hard",
+      "stage": "medium",
       "taxonomy": [
-        "math",
-        "dict"
-      ],
-      "difficulty": "hard",
-      "score": 0.814
-    },
-    {
-      "uid": "easy_medium_hard-synllm_10-2",
-      "source_task_id": "synllm_10",
-      "strategy": "easy_medium_hard",
-      "stage": "hard",
-      "taxonomy": [
-        "bitwise",
-        "strings",
         "io"
       ],
-      "difficulty": "hard",
-      "score": 0.923
+      "difficulty": "medium",
+      "score": 0.587
     },
     {
       "uid": "easy_medium_hard-synllm_7-3",
       "source_task_id": "synllm_7",
       "strategy": "easy_medium_hard",
-      "stage": "hard",
+      "stage": "medium",
       "taxonomy": [
-        "search",
-        "bitwise",
-        "lists"
+        "io"
       ],
-      "difficulty": "hard",
-      "score": 0.968
+      "difficulty": "medium",
+      "score": 0.587
     },
     {
-      "uid": "easy_medium_hard-synllm_20-4",
-      "source_task_id": "synllm_20",
-      "strategy": "easy_medium_hard",
-      "stage": "hard",
-      "taxonomy": [
-        "search",
-        "bitwise",
-        "lists"
-      ],
-      "difficulty": "hard",
-      "score": 0.974
-    },
-    {
-      "uid": "easy_medium_hard-synllm_12-5",
+      "uid": "easy_medium_hard-synllm_12-4",
       "source_task_id": "synllm_12",
       "strategy": "easy_medium_hard",
-      "stage": "hard",
+      "stage": "medium",
       "taxonomy": [
-        "graph",
-        "bitwise"
-      ],
-      "difficulty": "hard",
-      "score": 0.991
-    },
-    {
-      "uid": "easy_medium_hard-synllm_1-6",
-      "source_task_id": "synllm_1",
-      "strategy": "easy_medium_hard",
-      "stage": "hard",
-      "taxonomy": [
-        "recursion",
-        "io",
-        "math"
-      ],
-      "difficulty": "hard",
-      "score": 1.037
-    },
-    {
-      "uid": "easy_medium_hard-synllm_6-7",
-      "source_task_id": "synllm_6",
-      "strategy": "easy_medium_hard",
-      "stage": "hard",
-      "taxonomy": [
-        "dp",
-        "lists",
-        "search"
-      ],
-      "difficulty": "hard",
-      "score": 1.051
-    },
-    {
-      "uid": "diversity-synllm_12-8",
-      "source_task_id": "synllm_12",
-      "strategy": "diversity",
-      "stage": "hard",
-      "taxonomy": [
-        "graph",
-        "bitwise"
-      ],
-      "difficulty": "hard",
-      "score": 0.991
-    },
-    {
-      "uid": "diversity-synllm_6-9",
-      "source_task_id": "synllm_6",
-      "strategy": "diversity",
-      "stage": "hard",
-      "taxonomy": [
-        "dp",
-        "lists",
-        "search"
-      ],
-      "difficulty": "hard",
-      "score": 1.051
-    },
-    {
-      "uid": "diversity-synllm_4-10",
-      "source_task_id": "synllm_4",
-      "strategy": "diversity",
-      "stage": "hard",
-      "taxonomy": [
-        "math",
-        "dict"
-      ],
-      "difficulty": "hard",
-      "score": 0.814
-    },
-    {
-      "uid": "diversity-synllm_10-11",
-      "source_task_id": "synllm_10",
-      "strategy": "diversity",
-      "stage": "hard",
-      "taxonomy": [
-        "bitwise",
         "strings",
         "io"
       ],
-      "difficulty": "hard",
-      "score": 0.923
+      "difficulty": "medium",
+      "score": 0.637
     },
     {
-      "uid": "diversity-synllm_7-12",
-      "source_task_id": "synllm_7",
-      "strategy": "diversity",
-      "stage": "hard",
-      "taxonomy": [
-        "search",
-        "bitwise",
-        "lists"
-      ],
-      "difficulty": "hard",
-      "score": 0.968
-    },
-    {
-      "uid": "diversity-synllm_1-13",
+      "uid": "easy_medium_hard-synllm_1-5",
       "source_task_id": "synllm_1",
-      "strategy": "diversity",
-      "stage": "hard",
-      "taxonomy": [
-        "recursion",
-        "io",
-        "math"
-      ],
-      "difficulty": "hard",
-      "score": 1.037
-    },
-    {
-      "uid": "mutate-synllm_4-15",
-      "source_task_id": "synllm_4",
-      "strategy": "mutate",
-      "stage": "hard",
-      "taxonomy": [
-        "math",
-        "dict"
-      ],
-      "difficulty": "hard",
-      "score": 0.814
-    },
-    {
-      "uid": "mutate-synllm_10-16",
-      "source_task_id": "synllm_10",
-      "strategy": "mutate",
-      "stage": "hard",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
       "taxonomy": [
         "bitwise",
-        "strings",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.712
+    },
+    {
+      "uid": "easy_medium_hard-synllm_25-7",
+      "source_task_id": "synllm_25",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
+      "taxonomy": [
+        "bitwise",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.762
+    },
+    {
+      "uid": "easy_medium_hard-synllm_26-9",
+      "source_task_id": "synllm_26",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
+      "taxonomy": [
+        "bitwise",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.781
+    },
+    {
+      "uid": "easy_medium_hard-synllm_14-10",
+      "source_task_id": "synllm_14",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
+      "taxonomy": [
+        "bitwise",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.781
+    },
+    {
+      "uid": "easy_medium_hard-synllm_4-11",
+      "source_task_id": "synllm_4",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
+      "taxonomy": [
+        "bitwise",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.782
+    },
+    {
+      "uid": "easy_medium_hard-synllm_24-12",
+      "source_task_id": "synllm_24",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
+      "taxonomy": [
+        "bitwise",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.785
+    },
+    {
+      "uid": "easy_medium_hard-synllm_29-16",
+      "source_task_id": "synllm_29",
+      "strategy": "easy_medium_hard",
+      "stage": "hard",
+      "taxonomy": [
+        "lists",
+        "sorting",
         "io"
       ],
       "difficulty": "hard",
-      "score": 0.923
+      "score": 0.902
     },
     {
-      "uid": "mutate-synllm_7-17",
-      "source_task_id": "synllm_7",
-      "strategy": "mutate",
+      "uid": "easy_medium_hard-synllm_23-17",
+      "source_task_id": "synllm_23",
+      "strategy": "easy_medium_hard",
       "stage": "hard",
       "taxonomy": [
-        "search",
         "bitwise",
-        "lists"
-      ],
-      "difficulty": "hard",
-      "score": 0.968
-    },
-    {
-      "uid": "mutate-synllm_20-18",
-      "source_task_id": "synllm_20",
-      "strategy": "mutate",
-      "stage": "hard",
-      "taxonomy": [
-        "search",
-        "bitwise",
-        "lists"
-      ],
-      "difficulty": "hard",
-      "score": 0.974
-    },
-    {
-      "uid": "mutate-synllm_12-19",
-      "source_task_id": "synllm_12",
-      "strategy": "mutate",
-      "stage": "hard",
-      "taxonomy": [
-        "graph",
-        "bitwise"
-      ],
-      "difficulty": "hard",
-      "score": 0.991
-    },
-    {
-      "uid": "mutate-synllm_1-20",
-      "source_task_id": "synllm_1",
-      "strategy": "mutate",
-      "stage": "hard",
-      "taxonomy": [
-        "recursion",
         "io",
-        "math"
+        "loops"
       ],
       "difficulty": "hard",
-      "score": 1.037
+      "score": 0.907
     },
     {
-      "uid": "mutate-synllm_6-21",
-      "source_task_id": "synllm_6",
-      "strategy": "mutate",
+      "uid": "easy_medium_hard-synllm_3-18",
+      "source_task_id": "synllm_3",
+      "strategy": "easy_medium_hard",
       "stage": "hard",
       "taxonomy": [
-        "dp",
-        "lists",
-        "search"
+        "bitwise",
+        "io",
+        "loops"
       ],
       "difficulty": "hard",
-      "score": 1.051
+      "score": 0.912
+    },
+    {
+      "uid": "easy_medium_hard-synllm_13-21",
+      "source_task_id": "synllm_13",
+      "strategy": "easy_medium_hard",
+      "stage": "hard",
+      "taxonomy": [
+        "strings",
+        "bitwise",
+        "io"
+      ],
+      "difficulty": "hard",
+      "score": 0.939
+    },
+    {
+      "uid": "easy_medium_hard-synllm_28-22",
+      "source_task_id": "synllm_28",
+      "strategy": "easy_medium_hard",
+      "stage": "hard",
+      "taxonomy": [
+        "bitwise",
+        "io",
+        "lists"
+      ],
+      "difficulty": "hard",
+      "score": 0.942
+    },
+    {
+      "uid": "easy_medium_hard-synllm_16-24",
+      "source_task_id": "synllm_16",
+      "strategy": "easy_medium_hard",
+      "stage": "hard",
+      "taxonomy": [
+        "bitwise",
+        "io",
+        "strings"
+      ],
+      "difficulty": "hard",
+      "score": 0.947
+    },
+    {
+      "uid": "easy_medium_hard-synllm_11-26",
+      "source_task_id": "synllm_11",
+      "strategy": "easy_medium_hard",
+      "stage": "hard",
+      "taxonomy": [
+        "bitwise",
+        "io",
+        "loops",
+        "strings"
+      ],
+      "difficulty": "hard",
+      "score": 1.05
+    },
+    {
+      "uid": "easy_medium_hard-synllm_22-27",
+      "source_task_id": "synllm_22",
+      "strategy": "easy_medium_hard",
+      "stage": "hard",
+      "taxonomy": [
+        "bitwise",
+        "io",
+        "lists",
+        "loops"
+      ],
+      "difficulty": "hard",
+      "score": 1.052
+    },
+    {
+      "uid": "easy_medium_hard-synllm_10-30",
+      "source_task_id": "synllm_10",
+      "strategy": "easy_medium_hard",
+      "stage": "hard",
+      "taxonomy": [
+        "bitwise",
+        "io",
+        "loops",
+        "search",
+        "strings"
+      ],
+      "difficulty": "hard",
+      "score": 1.128
     }
   ]
 }

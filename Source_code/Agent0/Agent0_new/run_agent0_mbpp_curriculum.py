@@ -971,9 +971,9 @@ def infer_taxonomy(record: dict) -> dict:
     if code_features["imports"] >= 2:
         difficulty_score += 0.03
 
-    if difficulty_score < 0.42:
+    if difficulty_score < 0.55:
         difficulty = "easy"
-    elif difficulty_score < 0.72:
+    elif difficulty_score < 0.80:
         difficulty = "medium"
     else:
         difficulty = "hard"
@@ -1749,6 +1749,7 @@ def curriculum_entry_from_seed(
     repair_rounds_used = exec_result.repair_rounds_used
     test_repair_rounds_used = exec_result.test_repair_rounds_used
     accepted = exec_result.accepted
+    reasoning = exec_result.reasoning
     if exec_result.record is not seed:
         seed = exec_result.record
 
@@ -1766,6 +1767,7 @@ def curriculum_entry_from_seed(
         "curriculum_prompt": curriculum_prompt,
         "original_prompt": seed["prompt"],
         "solution_code": solution_code,
+        "reasoning": reasoning,
         "explanation": explanation,
         "mutation_notes": mutation_notes,
         "test_setup_code": seed.get("test_setup_code", ""),
@@ -1930,6 +1932,9 @@ def main() -> None:
     kb_path = model_dir / "knowledge_base.jsonl"
     rejected_path = model_dir / "rejected.jsonl"
     summary_path = model_dir / "summary.json"
+
+    # Global KB (all models combined)
+    global_kb_path = output_dir / "all_models" / "knowledge_base.jsonl"
     logger.debug("Paths | data=%s output=%s kb=%s rejected=%s summary=%s", data_path, output_dir, kb_path, rejected_path, summary_path)
 
     resolved_synthetic_generator = args.synthetic_generator
@@ -2093,6 +2098,10 @@ def main() -> None:
         if entry["accepted"]:
             accepted_rows.append(entry)
             append_jsonl(kb_path, entry)
+            # Append to global KB (all models combined) with source model tag
+            global_entry = dict(entry)
+            global_entry["source_model"] = runtime.model
+            append_jsonl(global_kb_path, global_entry)
             accepted_prompts_this_run.add(entry.get("curriculum_prompt", entry.get("original_prompt", "")))
             # Live update vector index
             if kb_retriever is not None:

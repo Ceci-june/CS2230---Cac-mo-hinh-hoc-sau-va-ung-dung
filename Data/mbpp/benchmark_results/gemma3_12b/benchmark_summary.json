@@ -1,0 +1,2275 @@
+{
+  "model": "gemma3:12b",
+  "provider": "ollama-cloud",
+  "tasks_count": 378,
+  "kb_path": "/Users/vy/Desktop/School/CS2230 - Thầy Tiệp Bịp/Do_an/Data/mbpp/curriculum_outputs/all_models/knowledge_base.jsonl",
+  "kb_entries": 461,
+  "results": {
+    "with_kb": {
+      "samples_file": "/Users/vy/Desktop/School/CS2230 - Thầy Tiệp Bịp/Do_an/Data/mbpp/benchmark_results/gemma3_12b/with_kb_samples.jsonl",
+      "time_seconds": 5365.3,
+      "eval": {
+        "total": 315,
+        "base_pass": 285,
+        "base_rate": 90.48,
+        "plus_pass": 181,
+        "plus_rate": 57.46,
+        "details": [
+          {
+            "task_id": "Mbpp/2",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/3",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/4",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/6",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/7",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/8",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/9",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/11",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/12",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/14",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/16",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/17",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/18",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/19",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/20",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/56",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/57",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/58",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/59",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/61",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/62",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/63",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/64",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/65",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/66",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/67",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/68",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/69",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/70",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/71",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/72",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/74",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/75",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/77",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/79",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/80",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/82",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/84",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/85",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/86",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/87",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/88",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/89",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/90",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/91",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/92",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/93",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/94",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/95",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/96",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/97",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/98",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/99",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/100",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/101",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/102",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/103",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/104",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/105",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/106",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/108",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/109",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/111",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/113",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/116",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/118",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/119",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/120",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/123",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/124",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/125",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/126",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/127",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/128",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/129",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/130",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/131",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/132",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/133",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/135",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/137",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/138",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/139",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/140",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/141",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/142",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/145",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/160",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/161",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/162",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/165",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/166",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/167",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/168",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/170",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/171",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/172",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/222",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/223",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/224",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/226",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/227",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/230",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/232",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/233",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/234",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/235",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/237",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/238",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/239",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/240",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/242",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/244",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/245",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/247",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/250",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/251",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/252",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/253",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/255",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/256",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/257",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/259",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/260",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/261",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/262",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/264",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/265",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/266",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/267",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/268",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/269",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/270",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/271",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/272",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/273",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/274",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/276",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/277",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/278",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/279",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/280",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/281",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/282",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/283",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/284",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/285",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/286",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/287",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/290",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/292",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/293",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/294",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/296",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/297",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/299",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/300",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/301",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/305",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/306",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/308",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/309",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/310",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/311",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/312",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/388",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/389",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/390",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/391",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/392",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/394",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/395",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/397",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/398",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/404",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/405",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/406",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/409",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/410",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/412",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/413",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/414",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/415",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/418",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/419",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/420",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/421",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/422",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/424",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/425",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/426",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/427",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/428",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/429",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/430",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/432",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/433",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/435",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/436",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/437",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/439",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/440",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/441",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/445",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/446",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/447",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/448",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/450",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/451",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/453",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/454",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/455",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/456",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/457",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/458",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/459",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/460",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/462",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/463",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/465",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/468",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/470",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/471",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/472",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/473",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/474",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/475",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/476",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/477",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/478",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/479",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/554",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/555",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/556",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/557",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/558",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/559",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/560",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/562",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/563",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/564",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/565",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/566",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/567",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/568",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/569",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/572",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/573",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/576",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/577",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/578",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/579",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/580",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/581",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/583",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/585",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/586",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/587",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/588",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/589",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/590",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/591",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/592",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/593",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/594",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/596",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/597",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/598",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/599",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/600",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/602",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/603",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/604",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/605",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/606",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/607",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/608",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/610",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/611",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/612",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/614",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/615",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/616",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/618",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/619",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/620",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/622",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/623",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/624",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/626",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/628",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/629",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/630",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/631",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/632",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/633",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/635",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/637",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/638",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/639",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/641",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/643",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/644",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/720",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/721",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/722",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/723",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/724",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/725",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/726",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/728",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/730",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/731",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/732",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/733",
+            "base_pass": true,
+            "plus_pass": true
+          }
+        ]
+      }
+    },
+    "baseline": {
+      "samples_file": "/Users/vy/Desktop/School/CS2230 - Thầy Tiệp Bịp/Do_an/Data/mbpp/benchmark_results/gemma3_12b/baseline_samples.jsonl",
+      "time_seconds": 1450.0,
+      "eval": {
+        "total": 133,
+        "base_pass": 116,
+        "base_rate": 87.22,
+        "plus_pass": 65,
+        "plus_rate": 48.87,
+        "details": [
+          {
+            "task_id": "Mbpp/568",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/572",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/573",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/576",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/577",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/578",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/579",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/580",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/581",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/583",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/585",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/586",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/587",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/588",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/589",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/590",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/591",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/592",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/593",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/594",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/596",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/597",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/598",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/599",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/600",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/602",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/603",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/604",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/605",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/606",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/607",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/608",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/610",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/611",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/612",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/614",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/615",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/616",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/618",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/619",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/620",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/622",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/623",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/624",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/626",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/628",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/629",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/630",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/631",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/632",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/633",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/635",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/637",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/638",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/639",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/641",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/643",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/644",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/720",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/721",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/722",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/723",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/724",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/725",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/726",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/728",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/730",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/731",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/732",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/733",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/734",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/735",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/736",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/737",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/739",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/740",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/741",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/742",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/743",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/744",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/745",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/748",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/749",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/750",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/751",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/752",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/753",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/754",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/755",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/757",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/758",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/759",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/760",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/762",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/763",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/764",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/765",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/766",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/767",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/769",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/770",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/771",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/772",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/773",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/775",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/777",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/778",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/780",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/781",
+            "base_pass": false,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/782",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/784",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/785",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/786",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/787",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/788",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/790",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/791",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/792",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/793",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/794",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/796",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/797",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/798",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/799",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/800",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/801",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/803",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/804",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/805",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/806",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/807",
+            "base_pass": true,
+            "plus_pass": true
+          },
+          {
+            "task_id": "Mbpp/808",
+            "base_pass": true,
+            "plus_pass": false
+          },
+          {
+            "task_id": "Mbpp/809",
+            "base_pass": true,
+            "plus_pass": false
+          }
+        ]
+      }
+    }
+  }
+}

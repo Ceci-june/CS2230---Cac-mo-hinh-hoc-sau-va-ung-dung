@@ -154,6 +154,7 @@ class KnowledgeRetriever:
                 entries.append({
                     "original_prompt": prompt,
                     "solution_code": code,
+                    "reasoning": row.get("reasoning", ""),
                     "difficulty": row.get("difficulty", "unknown"),
                     "taxonomy": row.get("taxonomy", []),
                     "uid": row.get("uid", ""),
@@ -269,9 +270,70 @@ class KnowledgeRetriever:
         logger.info("add_entry | indexed new entry (%s total) | %s", len(self.entries), prompt[:60])
         return True
 
-    def query(self, prompt: str, n: int = 3) -> List[dict]:
+    def rewrite_query(self, prompt: str, runtime_config: Optional[dict] = None) -> str:
+        """
+        Rewrite/expand the query prompt for better KB retrieval.
+        Uses LLM to rephrase and add related keywords.
+        """
+        if not runtime_config:
+            return prompt
+
+        import urllib.request, json
+        provider = runtime_config.get("provider", "ollama")
+        model = runtime_config.get("model", "gemma3:4b")
+        base_url = runtime_config.get("base_url", "http://localhost:11434")
+        api_key = runtime_config.get("api_key")
+
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "Rewrite the coding task below into a clearer, more searchable form. "
+                    "Add related algorithm/technique keywords. "
+                    "Return only the rewritten query, one paragraph, no code."
+                ),
+            },
+            {"role": "user", "content": prompt},
+        ]
+
+        try:
+            if provider in ("ollama", "ollama-cloud"):
+                payload = {"model": model, "messages": messages, "stream": False, "options": {"temperature": 0.1, "num_predict": 200}}
+                headers = {"Content-Type": "application/json", "User-Agent": "Agent0/1.0"}
+                if api_key:
+                    headers["Authorization"] = f"Bearer {api_key}"
+                data = json.dumps(payload).encode()
+                req = urllib.request.Request(f"{base_url.rstrip('/')}/api/chat", data=data, headers=headers, method="POST")
+                with urllib.request.urlopen(req, timeout=30) as resp:
+                    body = json.loads(resp.read().decode())
+                rewritten = (body.get("message", {}).get("content", "") or "").strip()
+            else:
+                payload = {"model": model, "messages": messages, "temperature": 0.1, "max_tokens": 200}
+                headers = {"Content-Type": "application/json", "User-Agent": "Agent0/1.0"}
+                if api_key:
+                    headers["Authorization"] = f"Bearer {api_key}"
+                data = json.dumps(payload).encode()
+                req = urllib.request.Request(f"{base_url.rstrip('/')}/chat/completions", data=data, headers=headers, method="POST")
+                with urllib.request.urlopen(req, timeout=30) as resp:
+                    body = json.loads(resp.read().decode())
+                rewritten = (body.get("choices", [{}])[0].get("message", {}).get("content", "") or "").strip()
+
+            # Strip think blocks
+            import re
+            rewritten = re.sub(r"<think>.*?</think>", "", rewritten, flags=re.DOTALL).strip()
+
+            if rewritten:
+                logger.info("Query rewritten | original=%s... → rewritten=%s...", prompt[:60], rewritten[:60])
+                return rewritten
+        except Exception as e:
+            logger.warning("Query rewrite failed: %s", e)
+
+        return prompt
+
+    def query(self, prompt: str, n: int = 3, runtime_config: Optional[dict] = None) -> List[dict]:
         """
         Find the n most similar KB entries to the given prompt.
+        Optionally rewrites query via LLM before embedding.
 
         Returns list of dicts with: original_prompt, solution_code, similarity
         """
@@ -281,9 +343,12 @@ class KnowledgeRetriever:
         if not self.entries or not self.embeddings:
             return []
 
+        # Rewrite query for better retrieval
+        search_prompt = self.rewrite_query(prompt, runtime_config) if runtime_config else prompt
+
         # Embed query
         query_emb = get_embedding(
-            prompt,
+            search_prompt,
             model=self.embed_model,
             base_url=self.embed_base_url,
             api_key=self.embed_api_key,
@@ -303,6 +368,7 @@ class KnowledgeRetriever:
             results.append({
                 "original_prompt": entry["original_prompt"],
                 "solution_code": entry["solution_code"],
+                "reasoning": entry.get("reasoning", ""),
                 "difficulty": entry["difficulty"],
                 "similarity": round(sim, 4),
             })
@@ -310,15 +376,19 @@ class KnowledgeRetriever:
         return results
 
     def format_few_shot(self, examples: List[dict]) -> str:
-        """Format retrieved examples as few-shot prompt text."""
+        """Format retrieved examples as few-shot prompt text with reasoning."""
         if not examples:
             return ""
 
         parts = []
         for i, ex in enumerate(examples, 1):
+            reasoning_block = ""
+            if ex.get("reasoning"):
+                reasoning_block = f"Reasoning:\n{ex['reasoning']}\n"
             parts.append(
-                f"### Example {i} (similarity: {ex['similarity']:.2f})\n"
+                f"### Example {i}\n"
                 f"Task: {ex['original_prompt']}\n"
+                f"{reasoning_block}"
                 f"Solution:\n```python\n{ex['solution_code']}\n```"
             )
         return "\n\n".join(parts)

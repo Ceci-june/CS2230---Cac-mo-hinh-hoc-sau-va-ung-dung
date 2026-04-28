@@ -1,0 +1,237 @@
+{
+  "config": {
+    "provider": "groq",
+    "backend": "Groq API",
+    "model": "llama-3.1-8b-instant",
+    "base_url": "https://api.groq.com/openai/v1",
+    "data_file": "/Users/vy/Desktop/School/CS2230 - Thầy Tiệp Bịp/Do_an/Data/mbpp/mbpp.jsonl",
+    "synthetic_only": true,
+    "synthetic_count": 15,
+    "synthetic_generator": "llm",
+    "synthetic_domain": "coding",
+    "strategy": "all",
+    "items_per_strategy": 5,
+    "limit": null,
+    "repair_rounds": 2,
+    "verify_timeout": 20,
+    "prompt_key": "text",
+    "code_key": "code",
+    "test_key": "test_list",
+    "setup_key": "test_setup_code",
+    "log_file": "Source_code/Agent0/Agent0_new/logs/kb_llama8b_3.log",
+    "log_level": "INFO",
+    "log_llm_io": false,
+    "llm_io_max_chars": 20000
+  },
+  "stats": {
+    "selected": 20,
+    "accepted": 12,
+    "rejected": 5,
+    "skipped_duplicate_fail": 3,
+    "skipped_existing_kb": 0,
+    "kb_existing": 20,
+    "kb_total": 32,
+    "taxonomy_top": [
+      [
+        "io",
+        9
+      ],
+      [
+        "bitwise",
+        6
+      ],
+      [
+        "math",
+        4
+      ],
+      [
+        "strings",
+        3
+      ],
+      [
+        "search",
+        3
+      ],
+      [
+        "lists",
+        3
+      ],
+      [
+        "dict",
+        1
+      ],
+      [
+        "datastructures",
+        1
+      ],
+      [
+        "set",
+        1
+      ],
+      [
+        "sorting",
+        1
+      ],
+      [
+        "loops",
+        1
+      ]
+    ],
+    "counts": {
+      "accepted": 12,
+      "stage_medium": 12,
+      "strategy_easy_medium_hard": 10,
+      "verified_pass": 12,
+      "rejected": 5,
+      "verified_fail": 5,
+      "stage_hard": 5,
+      "strategy_diversity": 3,
+      "skipped_duplicate_fail": 3,
+      "strategy_mutate": 4
+    }
+  },
+  "accepted_examples": [
+    {
+      "uid": "easy_medium_hard-synllm_1-1",
+      "source_task_id": "synllm_1",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
+      "taxonomy": [
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.474
+    },
+    {
+      "uid": "easy_medium_hard-synllm_7-2",
+      "source_task_id": "synllm_7",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
+      "taxonomy": [
+        "bitwise"
+      ],
+      "difficulty": "medium",
+      "score": 0.561
+    },
+    {
+      "uid": "easy_medium_hard-synllm_2-3",
+      "source_task_id": "synllm_2",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
+      "taxonomy": [
+        "math",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.66
+    },
+    {
+      "uid": "easy_medium_hard-synllm_6-4",
+      "source_task_id": "synllm_6",
+      "strategy": "easy_medium_hard",
+      "stage": "medium",
+      "taxonomy": [
+        "strings",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.694
+    },
+    {
+      "uid": "easy_medium_hard-synllm_14-8",
+      "source_task_id": "synllm_14",
+      "strategy": "easy_medium_hard",
+      "stage": "hard",
+      "taxonomy": [
+        "sorting",
+        "bitwise",
+        "lists"
+      ],
+      "difficulty": "hard",
+      "score": 0.891
+    },
+    {
+      "uid": "easy_medium_hard-synllm_8-10",
+      "source_task_id": "synllm_8",
+      "strategy": "easy_medium_hard",
+      "stage": "hard",
+      "taxonomy": [
+        "io",
+        "strings",
+        "bitwise",
+        "loops"
+      ],
+      "difficulty": "hard",
+      "score": 0.927
+    },
+    {
+      "uid": "diversity-synllm_7-11",
+      "source_task_id": "synllm_7",
+      "strategy": "diversity",
+      "stage": "medium",
+      "taxonomy": [
+        "bitwise"
+      ],
+      "difficulty": "medium",
+      "score": 0.561
+    },
+    {
+      "uid": "diversity-synllm_1-12",
+      "source_task_id": "synllm_1",
+      "strategy": "diversity",
+      "stage": "medium",
+      "taxonomy": [
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.474
+    },
+    {
+      "uid": "diversity-synllm_2-14",
+      "source_task_id": "synllm_2",
+      "strategy": "diversity",
+      "stage": "medium",
+      "taxonomy": [
+        "math",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.66
+    },
+    {
+      "uid": "mutate-synllm_1-17",
+      "source_task_id": "synllm_1",
+      "strategy": "mutate",
+      "stage": "medium",
+      "taxonomy": [
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.474
+    },
+    {
+      "uid": "mutate-synllm_2-18",
+      "source_task_id": "synllm_2",
+      "strategy": "mutate",
+      "stage": "medium",
+      "taxonomy": [
+        "math",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.66
+    },
+    {
+      "uid": "mutate-synllm_6-19",
+      "source_task_id": "synllm_6",
+      "strategy": "mutate",
+      "stage": "medium",
+      "taxonomy": [
+        "strings",
+        "io"
+      ],
+      "difficulty": "medium",
+      "score": 0.694
+    }
+  ]
+}

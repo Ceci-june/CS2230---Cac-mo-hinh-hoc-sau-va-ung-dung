@@ -1,0 +1,32 @@
+{
+  "model": "gemma3:4b",
+  "provider": "ollama-cloud",
+  "total_tasks": 378,
+  "kb_entries": 213,
+  "results": {
+    "with_kb": {
+      "mbpp_base": {
+        "pass_at_1": 78.0,
+        "passed": 295,
+        "total": 378
+      },
+      "mbpp_plus": {
+        "pass_at_1": 48.7,
+        "passed": 184,
+        "total": 378
+      }
+    },
+    "baseline": {
+      "mbpp_base": {
+        "pass_at_1": 79.6,
+        "passed": 301,
+        "total": 378
+      },
+      "mbpp_plus": {
+        "pass_at_1": 49.7,
+        "passed": 188,
+        "total": 378
+      }
+    }
+  }
+}

@@ -62,6 +62,7 @@ class ExecutionResult:
     test_repair_rounds_used: int = 0
     diagnosis_log: List[str] = field(default_factory=list)
     judge_verdict: Optional[str] = None
+    reasoning: str = ""
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -212,6 +213,48 @@ def generate_solution(runtime: RuntimeConfig, record: dict) -> str:
         if ref and "NotImplementedError" not in ref:
             return ref
         raise
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 1b) Generate reasoning for a verified solution
+# ─────────────────────────────────────────────────────────────────────────────
+
+def generate_reasoning(runtime: RuntimeConfig, record: dict, solution_code: str) -> str:
+    """Generate step-by-step reasoning explaining the approach and key ideas."""
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are a Python coding tutor. Explain the approach and reasoning "
+                "behind a solution in 3-5 concise bullet points. Focus on: "
+                "1) What algorithm/technique is used "
+                "2) Key steps of the approach "
+                "3) Edge cases handled. "
+                "No code. No markdown. Just plain text bullets."
+            ),
+        },
+        {
+            "role": "user",
+            "content": textwrap.dedent(
+                f"""
+                Task: {record.get('prompt', '')}
+
+                Solution:
+                {solution_code}
+
+                Explain the reasoning behind this solution.
+                """
+            ).strip(),
+        },
+    ]
+    try:
+        reasoning = chat_completion(runtime, messages, temperature=0.1, max_tokens=500)
+        reasoning = strip_think_blocks(reasoning)
+        logger.info("Reasoning generated | task_id=%s chars=%s", record.get("task_id"), len(reasoning))
+        return reasoning
+    except Exception as e:
+        logger.warning("Reasoning generation failed | task_id=%s error=%s", record.get("task_id"), e)
+        return ""
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -488,9 +531,10 @@ def execute_task(
     patched_record = record
 
     if verification["passed"]:
+        reasoning = generate_reasoning(runtime, record, solution_code)
         return ExecutionResult(
             solution_code=solution_code, verification=verification, accepted=True,
-            record=record, diagnosis_log=all_diagnoses,
+            record=record, diagnosis_log=all_diagnoses, reasoning=reasoning,
         )
 
     # 3) Stage 1: Repair code
@@ -502,9 +546,10 @@ def execute_task(
         all_diagnoses.extend(diagnoses)
 
     if verification["passed"]:
+        reasoning = generate_reasoning(runtime, record, solution_code)
         return ExecutionResult(
             solution_code=solution_code, verification=verification, accepted=True,
-            record=record, repair_rounds_used=repair_rounds_used, diagnosis_log=all_diagnoses,
+            record=record, repair_rounds_used=repair_rounds_used, diagnosis_log=all_diagnoses, reasoning=reasoning,
         )
 
     # 4) Judge
@@ -528,6 +573,10 @@ def execute_task(
             repair_rounds_used += extra
             all_diagnoses.extend(diagnoses)
 
+    reasoning = ""
+    if verification["passed"]:
+        reasoning = generate_reasoning(runtime, record, solution_code)
+
     return ExecutionResult(
         solution_code=solution_code,
         verification=verification,
@@ -537,6 +586,7 @@ def execute_task(
         test_repair_rounds_used=test_repair_rounds_used,
         diagnosis_log=all_diagnoses,
         judge_verdict=judge_verdict,
+        reasoning=reasoning,
     )
 
 
