@@ -67,7 +67,7 @@ pip install evalplus  # cho benchmark
 Tạo `.env` ở thư mục gốc project:
 
 ```bash
-GROQ_API_KEY="gsk_..."           # Groq (rate limit 6000 TPM, 100K TPD)
+GROQ_API_KEY="..."           # Groq (rate limit 6000 TPM, 100K TPD)
 OLLAMA_API_KEY="..."              # Ollama Cloud (không rate limit)
 ```
 
@@ -86,7 +86,6 @@ ollama pull mxbai-embed-large
 | `ollama-cloud` | `gemma3:4b`, `gemma3:12b`, `ministral-3:8b`, `qwen3-coder:480b` | Không |
 | `ollama` | `qwen3:4b`, `llama3.1:8b` (local) | Không |
 | `groq` | `llama-3.3-70b-versatile`, `llama-3.1-8b-instant` | 6000 TPM, 100K TPD |
-| `openai` | `gpt-4o-mini` | Theo plan |
 
 ---
 
@@ -228,7 +227,30 @@ print(result.solution_code)
 
 ---
 
-## 4. Benchmark MBPP / MBPP+
+## 4. Demo Web App (Gradio)
+
+Chạy demo web UI để gõ câu hỏi coding và nhận code + giải thích, có sử dụng KB few-shot RAG.
+
+```bash
+pip install gradio
+python demo.py
+```
+
+Mở browser tại **http://localhost:7860**.
+
+Demo features:
+- Input: câu hỏi tiếng Việt hoặc tiếng Anh
+- Output: code Python + explanation
+- Backend: Ollama Cloud (`gemma3:12b`) + KB 485 entries
+
+Yêu cầu:
+- File `.env` có `OLLAMA_API_KEY`
+- KB tồn tại tại `Data/mbpp/curriculum_outputs/gemma3_4b/knowledge_base.jsonl`
+- Ollama local chạy `mxbai-embed-large` cho embedding
+
+---
+
+## 5. Benchmark MBPP / MBPP+
 
 ### Full benchmark (with KB + baseline)
 
