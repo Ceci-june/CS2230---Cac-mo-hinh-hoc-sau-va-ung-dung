@@ -1,296 +1,351 @@
-# Agent0: Self-Evolving Agents from Zero Data — Evaluation & Training on AIME2025
+# Agent0 — Self-Evolving Code Knowledge Base
 
-Đồ án môn CS2230: Reproduce và đánh giá framework Agent0 trên bộ dữ liệu AIME2025.
+Hệ thống tự sinh Knowledge Base (KB) bằng LLM, sau đó dùng KB qua **Few-shot RAG** để cải thiện khả năng giải bài code. Đánh giá trên **MBPP / MBPP+** (EvalPlus).
 
-**Paper gốc**: [Agent0: Unleashing Self-Evolving Agents from Zero Data via Tool-Integrated Reasoning](https://arxiv.org/abs/2511.16043)
-
-**Dataset**: [opencompass/AIME2025](https://huggingface.co/datasets/opencompass/AIME2025) — 30 bài toán từ kỳ thi AIME 2025 (American Invitational Mathematics Examination)
-
----
-
-## Cấu trúc dự án
+## Kiến trúc
 
 ```
-Do_an/
-├── README.md                          # File này
-├── .env                               # API keys (Groq)
-├── .gitignore
-├── Paper/                             # Paper gốc (PDF)
-├── Source_code/
-│   └── Agent0/                        # Source code Agent0 (clone từ GitHub)
-└── Data/
-    └── aime2025/                      # Dữ liệu + scripts
-        ├── prepare_data.py            # Download AIME2025 → parquet
-        ├── aime2025_test.parquet      # 30 bài AIME2025 (I + II)
-        ├── aime2025_I_test.parquet    # 15 bài AIME2025-I
-        ├── aime2025_II_test.parquet   # 15 bài AIME2025-II
-        │
-        │── # ====== EVALUATION (chạy trên MacBook / bất kỳ máy nào) ======
-        ├── eval_api.py                # Eval qua API (không tool use)
-        ├── eval_api_tool.py           # Eval qua API + code interpreter (giống paper)
-        │
-        │── # ====== TRAINING (cần GPU) ======
-        ├── run_train.sh               # SFT + QLoRA (đơn giản, chắc chắn chạy)
-        ├── run_agent0_train.sh        # Agent0 ADPO only (executor training)
-        ├── run_agent0_full.sh         # Agent0 full pipeline (curriculum + executor)
-        ├── Agent0_AIME2025_Kaggle.ipynb  # Notebook cho Kaggle
-        ├── kaggle_train.py            # Script Python cho Kaggle
-        │
-        │── # ====== KẾT QUẢ ======
-        ├── results_custom_llama3.2:3b.json          # Llama 3.2 3B: 0%
-        ├── results_groq_qwen_qwen3-32b.json         # Qwen3-32B (no tool): 53.3%
-        └── results_tool_groq_qwen_qwen3-32b.json    # Qwen3-32B (+ tool): 53.3%
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 1: BUILD KNOWLEDGE BASE                              │
+│                                                             │
+│  curriculum_planner.py                                      │
+│    └── LLM tự plan subtopics + reflection rounds           │
+│                    │                                        │
+│                    ▼                                        │
+│  run_agent0_mbpp_curriculum.py                             │
+│    └── Sinh tasks → Generate code → Verify → Repair        │
+│                    │                                        │
+│  executor.py        ▼                                       │
+│    ├── generate_solution: LLM viết code                    │
+│    ├── verify: chạy assert tests                           │
+│    ├── diagnose: phân tích root cause                      │
+│    ├── repair_code: sửa code (max 2 rounds)                │
+│    ├── judge: code sai hay test sai?                       │
+│    ├── repair_tests: sửa test (nếu test sai)               │
+│    └── generate_reasoning: giải thích solution             │
+│                    │                                        │
+│                    ▼                                        │
+│        ┌────────────────────────┐                           │
+│        │ knowledge_base.jsonl   │                           │
+│        │ + .index.json (vector) │                           │
+│        └────────────────────────┘                           │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 2: SOLVE NEW TASKS (Few-shot RAG)                    │
+│                                                             │
+│  knowledge_retriever.py                                     │
+│    ├── embed query (mxbai-embed-large, 1024-dim)           │
+│    ├── cosine similarity vs all KB vectors                 │
+│    └── return top-N similar examples                       │
+│                    │                                        │
+│                    ▼                                        │
+│  Few-shot prompt:                                          │
+│    Example 1: task + reasoning + code                      │
+│    Example 2: task + reasoning + code                      │
+│    Now solve: <new task>                                   │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 3: BENCHMARK (MBPP / MBPP+ EvalPlus)                 │
+│                                                             │
+│  benchmark_mbpp.py                                          │
+│    └── 378 tasks × {with KB, baseline} → pass@1            │
+└─────────────────────────────────────────────────────────────┘
 ```
 
----
+## Cài đặt
 
-## Yêu cầu
+```bash
+cd Source_code/Agent0/Agent0_new
+pip install -r requirements_agent0_lite.txt
+pip install evalplus  # cho benchmark
+```
 
-| Mục đích | Phần cứng | Phần mềm |
+### API keys
+
+Tạo `.env` ở thư mục gốc project:
+
+```bash
+GROQ_API_KEY="gsk_..."           # Groq (rate limit 6000 TPM, 100K TPD)
+OLLAMA_API_KEY="..."              # Ollama Cloud (không rate limit)
+```
+
+### Embedding model
+
+Cần Ollama local cho vector search:
+
+```bash
+ollama pull mxbai-embed-large
+```
+
+### Providers hỗ trợ
+
+| Provider | Model ví dụ | Rate limit |
 |---|---|---|
-| Evaluation (API) | MacBook / bất kỳ | Python 3.10+, `openai`, `pandas` |
-| Evaluation (local) | Ollama + bất kỳ | Ollama, model Qwen3/Llama |
-| Training (SFT) | 1x T4 16GB | PyTorch, transformers, peft, trl |
-| Training (Agent0 full) | 2x T4 16GB+ | Agent0 framework, vLLM, VeRL |
+| `ollama-cloud` | `gemma3:4b`, `gemma3:12b`, `ministral-3:8b`, `qwen3-coder:480b` | Không |
+| `ollama` | `qwen3:4b`, `llama3.1:8b` (local) | Không |
+| `groq` | `llama-3.3-70b-versatile`, `llama-3.1-8b-instant` | 6000 TPM, 100K TPD |
+| `openai` | `gpt-4o-mini` | Theo plan |
 
 ---
 
-## Hướng dẫn chạy
+## 1. Tạo Knowledge Base
 
-### A. Evaluation qua API (không cần GPU)
-
-Cách nhanh nhất để đánh giá model trên AIME2025.
-
-#### 1. Chuẩn bị
+### Plan subtopics (xem trước)
 
 ```bash
-cd Data/aime2025
-pip install openai pandas
+python curriculum_planner.py \
+  --domain "coding" \
+  --total_tasks 30 \
+  --reflection_rounds 2 \
+  --provider ollama-cloud \
+  --model "gemma3:4b" \
+  --output logs/plan.json
 ```
 
-#### 2. Đặt API key
+LLM sẽ:
+1. **Initial plan**: tự nghĩ ~20 subtopics (basics, sorting, OOP, recursion, ...)
+2. **Reflection rounds**: review plan, thêm topics thiếu (DP, graph, sliding window, ...)
+3. Output: 50+ subtopics với difficulty + task_count
 
-Tạo file `.env` ở thư mục gốc `Do_an/`:
-```
-GROQ_API_KEY="gsk_your_key_here"
-```
-
-Hoặc export trực tiếp:
-```bash
-export GROQ_API_KEY="gsk_your_key_here"
-```
-
-Lấy key miễn phí tại: https://console.groq.com/keys
-
-#### 3. Chạy evaluation
+### Sinh KB tự động
 
 ```bash
-# Không tool use (reasoning thuần)
-python eval_api.py --provider groq --model qwen/qwen3-32b
-
-# Có tool use / code interpreter (giống paper)
-python eval_api_tool.py --provider groq --model qwen/qwen3-32b
-
-# Majority voting (5 samples)
-python eval_api.py --provider groq --model qwen/qwen3-32b --samples 5
-
-# Dùng Ollama local
-python eval_api.py --provider custom --base_url http://localhost:11434/v1 --api_key not-used --model qwen3:4b
+python run_agent0_mbpp_curriculum.py \
+  --provider ollama-cloud \
+  --model "gemma3:4b" \
+  --synthetic_only \
+  --synthetic_generator llm \
+  --synthetic_count 30 \
+  --synthetic_domain "coding" \
+  --strategy all \
+  --items_per_strategy 10 \
+  --log_file logs/kb_run.log
 ```
 
-#### 4. Kết quả
-
-File JSON được lưu tự động, ví dụ: `results_groq_qwen_qwen3-32b.json`
-
-Xem nhanh:
-```bash
-python3 -c "import json; d=json.load(open('results_groq_qwen_qwen3-32b.json')); print(f'Accuracy: {d[\"accuracy\"]:.1f}%')"
+Pipeline cho mỗi task:
+```
+Generate → Verify → FAIL?
+  ├─ Diagnose root cause
+  ├─ Repair code (×2)
+  └─ Judge: CODE or TEST wrong?
+       ├─ TEST → Repair tests (×2)
+       └─ CODE → Repair code (+1)
+  → PASS → Generate reasoning → KB
 ```
 
----
-
-### B. Training SFT + QLoRA (1x T4, chắc chắn chạy)
-
-Fine-tune model nhỏ (Qwen3-4B) bằng distillation từ model lớn (Qwen3-32B).
-
-**Không dùng Agent0 framework** — dùng thư viện chuẩn (transformers, peft, trl).
-
-#### Trên server (2x T4):
+### Chạy nhiều batches (KB tích lũy)
 
 ```bash
-cd Data/aime2025
-export GROQ_API_KEY="gsk_your_key_here"
-bash run_train.sh all
+# Mỗi seed sinh tasks khác nhau, append vào KB hiện có
+for seed in 100 200 300 400 500; do
+  python run_agent0_mbpp_curriculum.py \
+    --provider ollama-cloud --model "gemma3:4b" \
+    --synthetic_only --synthetic_generator llm \
+    --synthetic_count 30 --synthetic_domain "coding" \
+    --strategy all --items_per_strategy 10 --seed $seed \
+    --quiet --log_file logs/kb_${seed}.log &
+done
+wait
 ```
 
-Pipeline:
-1. Cài thư viện
-2. Download AIME2025
-3. Gọi Qwen3-32B (Groq API) giải 30 bài → thu thập lời giải đúng
-4. Eval Qwen3-4B trước training
-5. Train QLoRA SFT
-6. Eval sau training
+### Output
 
-#### Trên Kaggle (miễn phí):
-
-1. Upload `aime2025_test.parquet` + `results_tool_groq_qwen_qwen3-32b.json` lên [Kaggle Datasets](https://www.kaggle.com/datasets/new)
-2. Tạo notebook mới, chọn **GPU T4 x2**
-3. Import file `Agent0_AIME2025_Kaggle.ipynb`
-4. Chạy lần lượt từng cell
-
----
-
-### C. Training Agent0 — Executor Only (2x T4)
-
-Dùng Agent0 framework thật, chỉ train phần **Executor Agent** (ADPO + tool use).
-
-```bash
-# 1. Upload source code + data lên server
-scp -r Source_code/Agent0/Agent0 user@server:~/Agent0/Agent0
-scp -r Data/aime2025 user@server:~/aime2025
-
-# 2. SSH vào server
-ssh user@server
-cd ~/aime2025
-
-# 3. Chỉnh đường dẫn trong run_agent0_train.sh (dòng 21-23)
-#    AGENT0_DIR="$HOME/Agent0/Agent0"
-#    DATA_DIR="$HOME/aime2025"
-
-# 4. Cài đặt + chạy
-bash run_agent0_train.sh setup
-bash run_agent0_train.sh all
+```
+Data/mbpp/curriculum_outputs/
+├── gemma3_4b/                          ← KB của model gemma3:4b
+│   ├── knowledge_base.jsonl
+│   ├── knowledge_base.index.json       ← Vector index (auto-update)
+│   ├── rejected.jsonl
+│   └── summary.json
+├── ministral-3_8b/
+├── qwen3-coder_480b/
+├── llama-3.3-70b-versatile/
+└── all_models/                         ← KB tổng (gộp tất cả models)
+    └── knowledge_base.jsonl            ← Có field source_model
 ```
 
 ---
 
-### D. Training Agent0 — Full Pipeline (2x T4, giống paper)
-
-**Full co-evolution**: Curriculum Agent ↔ Executor Agent, 3 iterations.
+## 2. Query Knowledge Base
 
 ```bash
-ssh user@server
-cd ~/aime2025
-
-# 1. Cài đặt
-bash run_agent0_full.sh setup
-
-# 2. Test GPU trước
-bash run_agent0_full.sh test
-
-# 3. Chạy full (3 iterations, ~6-8 tiếng)
-bash run_agent0_full.sh all
-
-# Hoặc chạy từng bước:
-bash run_agent0_full.sh eval 0           # Eval base model
-bash run_agent0_full.sh iter 1           # Iteration 1
-bash run_agent0_full.sh iter 2           # Iteration 2
-bash run_agent0_full.sh iter 3           # Iteration 3
+python knowledge_retriever.py \
+  --kb_path Data/mbpp/curriculum_outputs/all_models/knowledge_base.jsonl \
+  --query "Write a function to find the GCD of two numbers" \
+  --n 3
 ```
 
-Pipeline mỗi iteration:
-```
-Train Curriculum Agent (GRPO) → Sinh câu hỏi → Lọc (self-consistency)
-→ Train Executor Agent (ADPO + tool use) → Eval AIME2025
-```
+Output: top-3 bài tương tự nhất với cosine similarity.
 
-**Lưu ý**: 2x T4 rất chật cho RL training. Nếu OOM, giảm config trong script hoặc dùng phương án B (SFT).
+### Dùng trong code
+
+```python
+from knowledge_retriever import KnowledgeRetriever
+
+retriever = KnowledgeRetriever(kb_path="path/to/knowledge_base.jsonl")
+retriever.build_index()  # Lần đầu embed, sau load từ cache
+
+examples = retriever.query("Write a function to find GCD", n=2)
+few_shot = retriever.format_few_shot(examples)
+```
 
 ---
 
-## Kết quả đã thu được
+## 3. Giải bài mới (Few-shot RAG)
 
-### Evaluation (không training)
+```python
+from executor import solve_with_knowledge, RuntimeConfig
+from knowledge_retriever import KnowledgeRetriever
 
-| Model | Params | Tool Use | AIME2025 Accuracy |
-|---|---|---|---|
-| Llama 3.2 (Ollama local) | 3B | Không | 0/30 (0.0%) |
-| Qwen3-32B (Groq API) | 32B | Không | 16/30 (53.3%) |
-| Qwen3-32B (Groq API) | 32B | Có (code interpreter) | 16/30 (53.3%) |
+retriever = KnowledgeRetriever(kb_path="path/to/knowledge_base.jsonl")
+retriever.build_index()
 
-### So sánh với paper
+task = {
+    "task_id": "new_1",
+    "prompt": "Write a function to find min cost path...",
+    "test_list": ["assert min_cost([[1,2],[3,4]], 1, 1) == 5"],
+    "challenge_test_list": [],
+    "test_setup_code": "",
+}
 
-| Model | AIME2025 | Ghi chú |
+examples = retriever.query(task["prompt"], n=2)
+few_shot = retriever.format_few_shot(examples)
+
+rt = RuntimeConfig(
+    provider="ollama-cloud",
+    model="gemma3:12b",
+    backend="Ollama Cloud",
+    base_url="https://ollama.com",
+    api_key="your_key",
+)
+
+result = solve_with_knowledge(rt, task, few_shot, repair_rounds=2)
+print(f"Accepted: {result.accepted}")
+print(result.solution_code)
+```
+
+---
+
+## 4. Benchmark MBPP / MBPP+
+
+### Full benchmark (with KB + baseline)
+
+```bash
+python benchmark_mbpp.py run \
+  --provider ollama-cloud \
+  --model "gemma3:12b" \
+  --kb_path "Data/mbpp/curriculum_outputs/all_models/knowledge_base.jsonl" \
+  --n_examples 2
+```
+
+### Chỉ generate (không evaluate)
+
+```bash
+python benchmark_mbpp.py generate \
+  --provider ollama-cloud --model "gemma3:12b" \
+  --mode with_kb --n_examples 2 \
+  --kb_path "Data/mbpp/curriculum_outputs/all_models/knowledge_base.jsonl" \
+  --output Data/mbpp/benchmark_results/gemma3_12b/with_kb_n2.jsonl
+```
+
+### Chỉ evaluate
+
+```bash
+python benchmark_mbpp.py evaluate \
+  --samples_file Data/mbpp/benchmark_results/gemma3_12b/with_kb_n2.jsonl
+```
+
+---
+
+## Kết quả thực nghiệm
+
+### Knowledge Base
+
+**485 unique entries** từ 4 models:
+
+| Model | Entries | Accept rate |
 |---|---|---|
-| Qwen3-4B Base | 6.15% | Paper, no training |
-| Qwen3-4B + Agent0 | **14.1%** | Paper, sau 3 iter RL |
-| Qwen3-8B Base | 16.7% | Paper, no training |
-| Qwen3-8B + Agent0 | **24.8%** | Paper, sau 3 iter RL |
-| Qwen3-32B (mình eval) | **53.3%** | Zero-shot, no training |
+| gemma3:4b | 382 | ~60% |
+| qwen3-coder:480b | 58 | ~79% |
+| llama-3.1-8b-instant | 24 | ~50% |
+| llama-3.3-70b-versatile | 21 | ~83% |
+
+Topics covered (16): math, strings, lists, dict, set, sorting, search, recursion, dp, graph, datastructures, bitwise, loops, io, regex, datetime.
+
+### Benchmark trên MBPP+ (378 tasks, pass@1)
+
+| Model | Size | Baseline | Best With KB | Improvement |
+|---|---|---|---|---|
+| gemma3:4b | 4B | 79.6% / 49.7% | 79.6% / 48.7% | 0% / -1% |
+| llama-3.1-8b-instant | 8B | 73.3% / 45.8% | — | — |
+| **ministral-3:8b** | **8B** | 80.9% / 50.9% | **83.2% / 52.1%** (n=4) | **+2.3% / +1.2%** |
+| **gemma3:12b** | **12B** | 87.8% / 54.2% | **89.4% / 54.8%** (n=2) | **+1.6% / +0.6%** |
+| rnj-1:8b | 8B | 88.6% / 55.6% | 85.2% / 53.4% | -3.4% (KB gây nhiễu) |
+| gpt-oss:20b | 20B | 94.2% / 56.9% | 92.1% / 56.3% | -2.1% (KB gây nhiễu) |
+
+Format: `MBPP (base) / MBPP+`
+
+### Phát hiện chính
+
+**KB hiệu quả với model trung bình (8B-12B):**
+- Model quá yếu (4B): không đủ khả năng tận dụng few-shot
+- Model trung bình (8-12B): **được hưởng lợi rõ rệt từ KB**
+- Model quá mạnh (20B+): đã đủ giỏi, KB gây nhiễu
+
+**n=2 là sweet spot** cho cả ministral-3:8b và gemma3:12b.
+
+### Ablation study cho gemma3:12b
+
+| n | MBPP (base) | MBPP+ |
+|---|---|---|
+| Baseline | 87.8% | 54.2% |
+| n=1 | 88.4% | 52.1% |
+| **n=2** | **89.4%** | **54.8%** |
+| n=3 | 88.1% | 53.4% |
+| n=4 | 87.3% | 53.4% |
+| n=5 | 88.1% | 53.4% |
 
 ---
 
-## Giải thích pipeline Agent0
-
-### Ý tưởng chính
-
-Agent0 tạo 2 agent từ cùng 1 base model, cho chúng "thi đấu" để cùng tiến hóa:
+## Cấu trúc files
 
 ```
-Curriculum Agent (ra đề) ←→ Executor Agent (giải bài)
-         ↓                           ↓
-   GRPO Training              ADPO Training
-   (học ra đề khó hơn)        (học giải bài + dùng tool)
+Agent0_new/
+├── curriculum_planner.py    Phase 1: plan subtopics + reflection
+├── executor.py              Generate / verify / diagnose / repair / judge
+├── knowledge_retriever.py   Vector DB: embed, search, format few-shot
+├── benchmark_mbpp.py        MBPP/MBPP+ benchmark (EvalPlus)
+├── run_agent0_mbpp_curriculum.py  Main pipeline
+├── README.md                (file này)
+└── requirements_agent0_lite.txt
 ```
 
-### Các bước chi tiết
+---
 
-1. **Curriculum Agent Training (GRPO)**: Học cách sinh câu hỏi toán khó vừa phải — không quá dễ (executor giải hết) cũng không quá khó (executor không giải được)
+## Tham số chính
 
-2. **Question Generation**: Curriculum Agent sinh ~1000 câu hỏi mới
+### `run_agent0_mbpp_curriculum.py`
 
-3. **Question Filtering**: Executor Agent thử giải, giữ lại câu hỏi có self-consistency score 0.3-0.8 (vùng "thử thách nhưng giải được")
+| Tham số | Mặc định | Mô tả |
+|---|---|---|
+| `--provider` | `auto` | `ollama`, `ollama-cloud`, `groq`, `openai` |
+| `--model` | `llama-3.3-70b-versatile` | Tên model |
+| `--synthetic_only` | `False` | Tự sinh task, không dùng MBPP gốc |
+| `--synthetic_generator` | `auto` | `llm` hoặc `template` |
+| `--synthetic_count` | `60` | Số task cần sinh |
+| `--synthetic_domain` | `coding` | Domain cho LLM plan |
+| `--strategy` | `all` | `easy_medium_hard`, `diversity`, `mutate`, `all` |
+| `--repair_rounds` | `2` | Số repair tối đa |
+| `--seed` | `42` | Random seed (đổi để đa dạng) |
 
-4. **Executor Agent Training (ADPO)**: Học giải bài + dùng Python code interpreter qua multi-turn reasoning
+### `benchmark_mbpp.py`
 
-5. **Co-evolution**: Lặp lại 3 vòng — curriculum sinh đề khó hơn, executor giải giỏi hơn
-
-### File code quan trọng
-
-| File | Chức năng |
+| Tham số | Mô tả |
 |---|---|
-| `Source_code/Agent0/Agent0/README.md` | Tổng quan |
-| `curriculum_train/examples/reward_function/math.py` | Hàm chấm điểm (50 dòng) |
-| `curriculum_train/examples/reward_function/curriculum_reward.py` | Reward cho curriculum agent |
-| `curriculum_train/question_generate/question_generate.py` | Sinh câu hỏi |
-| `curriculum_train/question_evaluate/evaluate.py` | Đánh giá câu hỏi |
-| `executor_train/examples/train/math_tir/train_qwen3_4b_adpo.sh` | Script training executor |
-| `executor_train/verl_tool/trainer/main_ppo.py` | Entry point RL training |
-
----
-
-## Troubleshooting
-
-### OOM (Out of Memory) khi training
-
-```bash
-# Giảm config trong run_agent0_full.sh:
-batch_size=4          # giảm từ 8
-n=2                   # giảm từ 4
-max_response_length=1024  # giảm từ 2048
-```
-
-### vLLM không khởi động được
-
-```bash
-# Thử tăng gpu_memory_utilization
-gpu_memory_utilization=0.45  # tăng từ 0.35
-```
-
-### Flash-attn không cài được trên T4
-
-Bỏ qua — training vẫn chạy được, chỉ chậm hơn ~10%.
-
-### Groq API rate limit
-
-Free tier giới hạn 30 request/phút. Script đã có `time.sleep(1)` giữa các request. Nếu vẫn bị limit, tăng thời gian chờ hoặc dùng model nhỏ hơn (`llama-3.1-8b-instant`).
-
----
-
-## Tài liệu tham khảo
-
-- Paper: [Agent0 (arXiv:2511.16043)](https://arxiv.org/abs/2511.16043)
-- Source code: [github.com/aiming-lab/Agent0](https://github.com/aiming-lab/Agent0)
-- Dataset: [opencompass/AIME2025](https://huggingface.co/datasets/opencompass/AIME2025)
-- VeRL framework: [github.com/volcengine/verl](https://github.com/volcengine/verl)
-- VeRL-Tool: [github.com/TIGER-AI-Lab/verl-tool](https://github.com/TIGER-AI-Lab/verl-tool)
+| `--provider`, `--model` | Model đánh giá |
+| `--kb_path` | KB file (jsonl) |
+| `--n_examples` | Số few-shot examples (1-5) |
+| `--limit` | Số tasks tối đa (testing) |
+| `--mode` | `with_kb` hoặc `baseline` |
