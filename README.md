@@ -300,12 +300,8 @@ Topics covered (16): math, strings, lists, dict, set, sorting, search, recursion
 
 | Model | Size | Baseline | Best With KB | Improvement |
 |---|---|---|---|---|
-| gemma3:4b | 4B | 79.6% / 49.7% | 79.6% / 48.7% | 0% / -1% |
-| llama-3.1-8b-instant | 8B | 73.3% / 45.8% | — | — |
 | **ministral-3:8b** | **8B** | 80.9% / 50.9% | **83.2% / 52.1%** (n=4) | **+2.3% / +1.2%** |
 | **gemma3:12b** | **12B** | 87.8% / 54.2% | **89.4% / 54.8%** (n=2) | **+1.6% / +0.6%** |
-| rnj-1:8b | 8B | 88.6% / 55.6% | 85.2% / 53.4% | -3.4% (KB gây nhiễu) |
-| gpt-oss:20b | 20B | 94.2% / 56.9% | 92.1% / 56.3% | -2.1% (KB gây nhiễu) |
 
 Format: `MBPP (base) / MBPP+`
 
